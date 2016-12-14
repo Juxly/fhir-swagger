@@ -6,10 +6,12 @@ Generate Swagger from a FHIR conformance profile
 ```bash
 npm install -g fhir-swagger
 fhir-swagger \
---fhir_url http://argonaut.healthintersections.com.au/open \
---conformance_path="/metadata?_format=application/json" \
+--conf_url=https://fhir-ehr.sandboxcerner.com/dstu2/d075cf8b-3261-481d-97e5-ba6c48d3b41f/metadata \
+--base_url=https://fhir-ehr.sandboxcerner.com/dstu2/d075cf8b-3261-481d-97e5-ba6c48d3b41f/ \ 
 --output swagger.json
 ```
+
+# Warning: Information below this line is out of date
 
 ### NodeJS
 ```bash

@@ -11,9 +11,9 @@ var xsdFilenames = FS.readdirSync(INPUT_DIR);
 
 var xsdFiles = xsdFilenames.map(function(f) {
   return Path.join(INPUT_DIR, f);
-})
+});
 
-console.log('files',xsdFiles[0])
+console.log('files',xsdFiles[0]);
 //Convert(xsdFiles[0]).pipe(process.stdout);
 Async.map(xsdFiles, Convert, function(err, jsonSchemas) {
   if (err) throw err;
@@ -22,5 +22,5 @@ Async.map(xsdFiles, Convert, function(err, jsonSchemas) {
     filename = filename.substring(0, filename.length - 4) + '.json';
     filename = Path.join(OUTPUT_DIR, filename);
     FS.writeFileSync(filename, schema);
-  })
-})
+  });
+});
