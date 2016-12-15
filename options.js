@@ -1,5 +1,6 @@
 var args = require('yargs').argv;
 var Request = require('request');
+var fs = require('fs');
 
 args = module.exports = JSON.parse(JSON.stringify(args));
 args.output = args.output || './swagger.json';
@@ -32,19 +33,29 @@ args.getConformance = function (callback) {
       headers: headers,
       json: true,
     }, function (err, resp, body) {
-      if (err)
-        return callback(err);
-      else {
-        if (body && body.description && body.name)
-          callback(null, body);
-        else
-          callback('Invalid conformance');
-      }
+      if (err) return callback(err);
+
+      if (body && body.description && body.name)
+        callback(null, body);
+      else
+        callback('Invalid conformance');
     });
   } else if (args.conf_path) {
     //if there's a path, load it in and convert to object
+    fs.readFile(args.conf_path, function (err, data) {
+      if (err) return callback(err);
+      var body = JSON.parse(data);
+      if (body && body.description && body.name)
+        callback(null, body);
+      else
+        callback('Invalid conformance');
+    });
   } else if (args.conf_obj) {
     //they already passed an object, yay
+    if (args.conf_obj && args.conf_obj.description && args.conf_obj.name)
+      callback(null, args.conf_obj);
+    else
+      callback('Invalid conformance');
   }
   else {
     //nothing to work with, return error
